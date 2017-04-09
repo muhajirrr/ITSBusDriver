@@ -25,6 +25,21 @@ public class SendLoc extends BroadcastReceiver {
                     == PackageManager.PERMISSION_GRANTED) {
                 Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
+                if (location != null) {
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+
+                    mDatabase.child("driver1").child("latitude").setValue(latitude);
+                    mDatabase.child("driver1").child("longitude").setValue(longitude);
+
+                    Toast.makeText(context, "Sending location to server\nLat: "+latitude+"\nlng: "+longitude,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            if (location != null) {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
 
@@ -34,17 +49,6 @@ public class SendLoc extends BroadcastReceiver {
                 Toast.makeText(context, "Sending location to server\nLat: "+latitude+"\nlng: "+longitude,
                         Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-
-            mDatabase.child("driver1").child("latitude").setValue(latitude);
-            mDatabase.child("driver1").child("longitude").setValue(longitude);
-
-            Toast.makeText(context, "Sending location to server\nLat: "+latitude+"\nlng: "+longitude,
-                    Toast.LENGTH_SHORT).show();
         }
     }
 }
