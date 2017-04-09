@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "285657807556",
+    "firebase_url": "https://itsbus-4aa60.firebaseio.com",
+    "project_id": "itsbus-4aa60",
+    "storage_bucket": "itsbus-4aa60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285657807556:android:65517f05aafcdd87",
+        "android_client_info": {
+          "package_name": "mobile.maps.itsbusdriver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285657807556-ukf6u0259vouvqrebtnm0nkba0c139oc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mobile.maps.itsbusdriver",
+            "certificate_hash": "c10b41dfa1cd04edb32d89a65d332da9897acc7a"
+          }
+        },
+        {
+          "client_id": "285657807556-db0l30or3aro87p09eh11oucu5vaiscs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnJIddzinXwI9Bd_VS7CMZDD7KTDIpH0U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285657807556-db0l30or3aro87p09eh11oucu5vaiscs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
