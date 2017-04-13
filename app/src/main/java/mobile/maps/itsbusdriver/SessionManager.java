@@ -11,6 +11,7 @@ public class SessionManager {
     int PRIVATE_MODE = 0;
     private static final String PREF_NAME = "session";
     private static final String IS_LOGIN = "IsLoggedIn";
+    private static final String IS_ACTIVE = "IsActive";
     public static final String KEY_USER = "key";
 
     public SessionManager(Context context_) {
@@ -25,26 +26,11 @@ public class SessionManager {
         editor.commit();
     }
 
-    public void checkLogin() {
-        if (!this.isLoggedIn()) {
-            Intent intent = new Intent(context, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-        }
-    }
-
-    public String getKey() {
-        return sharedPreferences.getString(KEY_USER, null);
-    }
-
     public void logout() {
         editor.clear();
         editor.commit();
 
         Intent intent = new Intent(context, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -52,4 +38,17 @@ public class SessionManager {
         return sharedPreferences.getBoolean(IS_LOGIN, false);
     }
 
+    public void turnOn() {
+        editor.putBoolean(IS_ACTIVE, true);
+        editor.commit();
+    }
+
+    public void turnOff() {
+        editor.putBoolean(IS_ACTIVE, false);
+        editor.commit();
+    }
+
+    public boolean isActive() {
+        return sharedPreferences.getBoolean(IS_ACTIVE, false);
+    }
 }

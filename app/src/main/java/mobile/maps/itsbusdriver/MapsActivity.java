@@ -15,6 +15,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -46,25 +49,71 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-
         session = new SessionManager(getApplicationContext());
 
-        session.checkLogin();
+        if (!session.isLoggedIn()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        } else {
+            setContentView(R.layout.activity_maps);
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkLocationPermission();
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                checkLocationPermission();
+            }
+
+            Button btnLogout = (Button) findViewById(R.id.btnLogout);
+            final Button btnOn = (Button) findViewById(R.id.btnOn);
+            final Button btnOff = (Button) findViewById(R.id.btnOff);
+
+            if (session.isActive()) {
+                btnOn.setEnabled(false);
+                btnOff.setEnabled(true);
+            } else {
+                btnOn.setEnabled(true);
+                btnOff.setEnabled(false);
+            }
+
+            btnLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                    session.logout();
+                }
+            });
+
+            final AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+            btnOn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    session.turnOn();
+
+                    startService(new Intent(getBaseContext(), SendLoc.class));
+
+                    btnOn.setEnabled(false);
+                    btnOff.setEnabled(true);
+                }
+            });
+
+            btnOff.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    session.turnOff();
+
+                    stopService(new Intent(getBaseContext(), SendLoc.class));
+
+                    btnOn.setEnabled(true);
+                    btnOff.setEnabled(false);
+                }
+            });
+
+            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+
+
         }
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(MapsActivity.this, SendLoc.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime(), 500, pendingIntent);
     }
 
 

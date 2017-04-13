@@ -10,4 +10,7 @@
     <string name="hint_etPassword">Password</string>
     <string name="btnLogin">Login</string>
 
+    <string name="track_opt">Location track</string>
+    <string name="btn_logout">Logout</string>
+
 </resources>
