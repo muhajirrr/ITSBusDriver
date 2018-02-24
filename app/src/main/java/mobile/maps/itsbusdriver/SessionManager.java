@@ -51,4 +51,8 @@ public class SessionManager {
     public boolean isActive() {
         return sharedPreferences.getBoolean(IS_ACTIVE, false);
     }
+
+    public String getKeyUser() {
+        return sharedPreferences.getString(KEY_USER, null);
+    }
 }

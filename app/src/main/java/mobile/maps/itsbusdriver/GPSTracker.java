@@ -99,38 +99,6 @@ public class GPSTracker extends Service implements LocationListener {
         return location;
     }
 
-    public void stopUsingGPS() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        if (locationManager != null) {
-            locationManager.removeUpdates(GPSTracker.this);
-        }
-    }
-
-    public double getLatitude() {
-        if (location != null) {
-            latitude = location.getLatitude();
-        }
-
-        return latitude;
-    }
-
-    public double getLongitude() {
-        if (location != null) {
-            longitude = location.getLongitude();
-        }
-
-        return longitude;
-    }
-
-    public boolean canGetLocation() {
-        return this.canGetLocation;
-    }
-
     public void showSettingAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
